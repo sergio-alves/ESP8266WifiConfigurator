@@ -35,11 +35,11 @@ struct WifiConfiguration  {
 /* defines a THandlerFunction pointer ... normally already defined in the ESP8266WebServer lib*/
 typedef std::function<void(void)> THandlerFunction;
 
-class WifiConfigurator
+class ESP8266WifiConfigurator
 {
 public:
-	WifiConfigurator(HardwareSerial * Serial, WifiConfiguration * wifiConfiguration, THandlerFunction persistConfiguration);
-	~WifiConfigurator();
+	ESP8266WifiConfigurator(HardwareSerial * Serial, WifiConfiguration * wifiConfiguration, THandlerFunction persistConfiguration);
+	~ESP8266WifiConfigurator();
 	void setup();
 	void loop();
   void setupWifi();

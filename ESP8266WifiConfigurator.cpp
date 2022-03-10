@@ -15,25 +15,25 @@
 ESP8266WebServer server(80);
 
 /* constructor */
-WifiConfigurator::WifiConfigurator(HardwareSerial * Serial, WifiConfiguration *wifiConfiguration, THandlerFunction persistConfiguration)
+ESP8266WifiConfigurator::ESP8266WifiConfigurator(HardwareSerial * Serial, WifiConfiguration *wifiConfiguration, THandlerFunction persistConfiguration)
 {
-  WifiConfigurator::Serial = Serial; 
-  WifiConfigurator::wifiConfiguration = wifiConfiguration;
-  WifiConfigurator::persistConfiguration = persistConfiguration;
+  ESP8266WifiConfigurator::Serial = Serial; 
+  ESP8266WifiConfigurator::wifiConfiguration = wifiConfiguration;
+  ESP8266WifiConfigurator::persistConfiguration = persistConfiguration;
 }
 
 /* destructor */
-WifiConfigurator::~WifiConfigurator(){
+ESP8266WifiConfigurator::~ESP8266WifiConfigurator(){
   Serial->println("Destructing WifiConfguratior");
 }
 
 /* setups the wifi */
-void WifiConfigurator::setupWifi() {
+void ESP8266WifiConfigurator::setupWifi() {
   long timeout = 0;
   
   delay(10);
-  WifiConfigurator::Serial->println();
-  WifiConfigurator::Serial->print("Connecting to ");
+  ESP8266WifiConfigurator::Serial->println();
+  ESP8266WifiConfigurator::Serial->print("Connecting to ");
 
   WiFi.mode(WIFI_AP_STA);
   WiFi.hostname(&(wifiConfiguration->hostname[0]));
@@ -48,20 +48,20 @@ void WifiConfigurator::setupWifi() {
   while (WiFi.status() != WL_CONNECTED && timeout < 10000) {
     timeout+=500;
     delay(500);
-    WifiConfigurator::Serial->print(".");
+    ESP8266WifiConfigurator::Serial->print(".");
   }
 
   IPAddress IP = WiFi.softAPIP();
-  WifiConfigurator::Serial->print("AP IP address: ");
-  WifiConfigurator::Serial->println(IP);
-  WifiConfigurator::Serial->println("WiFi connected");
-  WifiConfigurator::Serial->print("IP address: ");
-  WifiConfigurator::Serial->println(WiFi.localIP());
+  ESP8266WifiConfigurator::Serial->print("AP IP address: ");
+  ESP8266WifiConfigurator::Serial->println(IP);
+  ESP8266WifiConfigurator::Serial->println("WiFi connected");
+  ESP8266WifiConfigurator::Serial->print("IP address: ");
+  ESP8266WifiConfigurator::Serial->println(WiFi.localIP());
 }
 
 
 /* Setups the web server routes */
-void WifiConfigurator::setupWebServer() {
+void ESP8266WifiConfigurator::setupWebServer() {
   
   /* Reboots the module endpoint */
   server.on("/api/reboot-module", HTTP_POST, [this](void) {
@@ -126,17 +126,17 @@ void WifiConfigurator::setupWebServer() {
     }
     wifiConfiguration->control = WIFI_CONFIGURATION_CONTROL;
       
-    WifiConfigurator::persistConfiguration();
+    ESP8266WifiConfigurator::persistConfiguration();
   
     server.send(204, "text/html", "");
     
   });  
   server.begin();
-  WifiConfigurator::Serial->println("HTTP server started");
+  ESP8266WifiConfigurator::Serial->println("HTTP server started");
 }
 
 /* To be called by arduino setup method */
-void WifiConfigurator::setup() {
+void ESP8266WifiConfigurator::setup() {
   /* initializes the wifi */
   setupWifi();
 
@@ -155,7 +155,7 @@ void WifiConfigurator::setup() {
 }
 
 /* To be called the arduino loop method */
-void WifiConfigurator::loop() {  
+void ESP8266WifiConfigurator::loop() {  
   server.handleClient();
   MDNS.update();
 }
