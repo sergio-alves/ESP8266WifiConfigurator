@@ -38,7 +38,6 @@ void ESP8266WifiConfigurator::setupWifi() {
   
   WiFi.mode(WIFI_AP_STA);
   WiFi.hostname(&(wifiConfiguration->hostname[0]));
-  WiFi.softAP(&(wifiConfiguration->ap.ssid[0]));
   WiFi.begin(&(wifiConfiguration->sta.ssid[0]), &(wifiConfiguration->sta.password[0]));
 
   Serial->print("Started WIFI Connection with ");
@@ -51,14 +50,17 @@ void ESP8266WifiConfigurator::setupWifi() {
     Serial->print(".");
   }
 
-  Serial->println(".");
-
-  IPAddress IP = WiFi.softAPIP();
-  Serial->print("AP IP address: ");
-  Serial->println(IP);
-  Serial->println("WiFi connected");
-  Serial->print("IP address: ");
-  Serial->println(WiFi.localIP());
+  if(WiFi.status() != WL_CONNECTED) {
+	WiFi.softAP(&(wifiConfiguration->ap.ssid[0]));
+	IPAddress IP = WiFi.softAPIP();
+	Serial->print("AP IP address: ");
+	Serial->println(IP);  
+  }else{
+	Serial->println(".");
+	Serial->println("WiFi connected");
+	Serial->print("IP address: ");
+	Serial->println(WiFi.localIP());
+  }
 }
 
 
