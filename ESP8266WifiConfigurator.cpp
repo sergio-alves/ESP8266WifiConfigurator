@@ -43,14 +43,15 @@ void ESP8266WifiConfigurator::setupWifi() {
 
   Serial->print("Started WIFI Connection with ");
   Serial->print(wifiConfiguration->sta.ssid);
-  Serial->print("ssid with following password ");
-  Serial->print(wifiConfiguration->sta.password);
-
+  Serial->println(" ssid. Starting connecting.");
+ 
   while (WiFi.status() != WL_CONNECTED && timeout < 10000) {
     timeout+=500;
     delay(500);
     Serial->print(".");
   }
+
+  Serial->println(".");
 
   IPAddress IP = WiFi.softAPIP();
   Serial->print("AP IP address: ");
