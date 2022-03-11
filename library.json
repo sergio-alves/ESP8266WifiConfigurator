@@ -2,9 +2,8 @@
 	"name": "ESP8266WifiConfigurator",
 	"frameworks": "Arduino",
 	"version": 1.0,
-	"platforms": "ESP8266",
 	"keywords": "wifi", "esp8266"
-	"description": "An arduino library allowing to easily configure wifi connection when connecting to device in AP",
+	"description": "Yet another arduino library allowing to easily configure wifi connection when connecting to device in AP",
 	"authors":
 	{
 			"name": "Sergio Alves",
@@ -13,5 +12,6 @@
 	"repository":{
 		"type": "git",
 		"url": "https://github.com/sergio-alves/ESP8266WifiConfigurator.git"
-	}
+	},
+	"platforms": [ "espressif32", "espressif8266" ]
 }

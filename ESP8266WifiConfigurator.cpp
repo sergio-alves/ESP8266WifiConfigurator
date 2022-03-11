@@ -1,5 +1,5 @@
 /*
- * WifiConfiguration.cpp - Library to be used on ESP8266 devices with wifi support allowing to 
+ * ESP8266WifiConfigurator.cpp - Library to be used on ESP8266 devices with wifi support allowing to 
  * setup sta wifi network, password when connected on the AP. 
  * 
  * When connected to access point with ssid sensor-reader you can connect to http://sensor-reader/configuration/wifi to display the configuration page 
@@ -9,7 +9,7 @@
  * Released into the public domain.
 */
 
-#include "WifiConfiguration.h"
+#include "ESP8266WifiConfigurator.h"
 
 /* Initializes the server */
 ESP8266WebServer server(80);
@@ -32,9 +32,10 @@ void ESP8266WifiConfigurator::setupWifi() {
   long timeout = 0;
   
   delay(10);
-  ESP8266WifiConfigurator::Serial->println();
-  ESP8266WifiConfigurator::Serial->print("Connecting to ");
-
+  Serial->println();
+  Serial->print("Hi I'm ");
+  Serial->println(wifiConfiguration->hostname);
+  
   WiFi.mode(WIFI_AP_STA);
   WiFi.hostname(&(wifiConfiguration->hostname[0]));
   WiFi.softAP(&(wifiConfiguration->ap.ssid[0]));
@@ -48,15 +49,15 @@ void ESP8266WifiConfigurator::setupWifi() {
   while (WiFi.status() != WL_CONNECTED && timeout < 10000) {
     timeout+=500;
     delay(500);
-    ESP8266WifiConfigurator::Serial->print(".");
+    Serial->print(".");
   }
 
   IPAddress IP = WiFi.softAPIP();
-  ESP8266WifiConfigurator::Serial->print("AP IP address: ");
-  ESP8266WifiConfigurator::Serial->println(IP);
-  ESP8266WifiConfigurator::Serial->println("WiFi connected");
-  ESP8266WifiConfigurator::Serial->print("IP address: ");
-  ESP8266WifiConfigurator::Serial->println(WiFi.localIP());
+  Serial->print("AP IP address: ");
+  Serial->println(IP);
+  Serial->println("WiFi connected");
+  Serial->print("IP address: ");
+  Serial->println(WiFi.localIP());
 }
 
 
