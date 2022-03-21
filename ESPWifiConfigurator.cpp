@@ -1,5 +1,5 @@
 /*
- * ESP8266WifiConfigurator.cpp - Library to be used on ESP8266 devices with wifi support allowing to 
+ * ESPWifiConfigurator.cpp - Library to be used on ESP8266 devices with wifi support allowing to 
  * setup sta wifi network, password when connected on the AP. 
  * 
  * When connected to access point with ssid sensor-reader you can connect to http://sensor-reader/configuration/wifi to display the configuration page 
@@ -9,7 +9,7 @@
  * Released into the public domain.
 */
 
-#include "ESP8266WifiConfigurator.h"
+#include "ESPWifiConfigurator.h"
 
 /* Initializes the server */
 #if defined(ESP8266)
@@ -21,20 +21,20 @@
 	
 
 /* constructor */
-ESP8266WifiConfigurator::ESP8266WifiConfigurator(HardwareSerial * Serial, WifiConfiguration *wifiConfiguration, THandlerFunction persistConfiguration)
+ESPWifiConfigurator::ESPWifiConfigurator(HardwareSerial * Serial, WifiConfiguration *wifiConfiguration, THandlerFunction persistConfiguration)
 {
-  ESP8266WifiConfigurator::Serial = Serial; 
-  ESP8266WifiConfigurator::wifiConfiguration = wifiConfiguration;
-  ESP8266WifiConfigurator::persistConfiguration = persistConfiguration;
+  ESPWifiConfigurator::Serial = Serial; 
+  ESPWifiConfigurator::wifiConfiguration = wifiConfiguration;
+  ESPWifiConfigurator::persistConfiguration = persistConfiguration;
 }
 
 /* destructor */
-ESP8266WifiConfigurator::~ESP8266WifiConfigurator(){
+ESPWifiConfigurator::~ESPWifiConfigurator(){
   Serial->println("Destructing WifiConfguratior");
 }
 
 /* setups the wifi */
-void ESP8266WifiConfigurator::setupWifi() {
+void ESPWifiConfigurator::setupWifi() {
   long timeout = 0;
   
   delay(10);
@@ -71,7 +71,7 @@ void ESP8266WifiConfigurator::setupWifi() {
 
 
 /* Setups the web server routes */
-void ESP8266WifiConfigurator::setupWebServer() {
+void ESPWifiConfigurator::setupWebServer() {
   
   /* Reboots the module endpoint */
   server.on("/api/reboot-module", HTTP_POST, [this](void) {
@@ -136,17 +136,17 @@ void ESP8266WifiConfigurator::setupWebServer() {
     }
     wifiConfiguration->control = WIFI_CONFIGURATION_CONTROL;
       
-    ESP8266WifiConfigurator::persistConfiguration();
+    ESPWifiConfigurator::persistConfiguration();
   
     server.send(204, "text/html", "");
     
   });  
   server.begin();
-  ESP8266WifiConfigurator::Serial->println("HTTP server started");
+  ESPWifiConfigurator::Serial->println("HTTP server started");
 }
 
 /* To be called by arduino setup method */
-void ESP8266WifiConfigurator::setup() {
+void ESPWifiConfigurator::setup() {
   /* initializes the wifi */
   setupWifi();
 
@@ -165,7 +165,7 @@ void ESP8266WifiConfigurator::setup() {
 }
 
 /* To be called the arduino loop method */
-void ESP8266WifiConfigurator::loop() {  
+void ESPWifiConfigurator::loop() {  
   server.handleClient();
 #if defined(ESP8266)
   MDNS.update();

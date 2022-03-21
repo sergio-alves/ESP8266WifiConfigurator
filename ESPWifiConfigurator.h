@@ -1,7 +1,7 @@
-// WifiConfiguration.h
+// ESPWifiConfigurator.h
 
-#ifndef _WIFICONFIGURATION_h
-#define _WIFICONFIGURATION_h
+#ifndef _ESPWIFICONFIGURATOR_h
+#define _ESPWIFICONFIGURATOR_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
@@ -44,11 +44,11 @@ struct WifiConfiguration  {
 /* defines a THandlerFunction pointer ... normally already defined in the ESP8266WebServer lib*/
 typedef std::function<void(void)> THandlerFunction;
 
-class ESP8266WifiConfigurator
+class ESPWifiConfigurator
 {
 public:
-	ESP8266WifiConfigurator(HardwareSerial * Serial, WifiConfiguration * wifiConfiguration, THandlerFunction persistConfiguration);
-	~ESP8266WifiConfigurator();
+	ESPWifiConfigurator(HardwareSerial * Serial, WifiConfiguration * wifiConfiguration, THandlerFunction persistConfiguration);
+	~ESPWifiConfigurator();
 	void setup();
 	void loop();
   void setupWifi();

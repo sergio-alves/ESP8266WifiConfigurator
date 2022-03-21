@@ -1,6 +1,6 @@
-# ESP8266WifiConfigurator
+# ESPWifiConfigurator
 
-Yet another ESP8266 library for an easy wifi setup. 
+Yet another ESP8266/ESP32 library for an easy wifi setup. 
 
 When started, the module will provide the following setup page
 

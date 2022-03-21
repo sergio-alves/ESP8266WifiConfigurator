@@ -1,4 +1,4 @@
-#include <ESP8266WifiConfigurator.h>
+#include <ESPWifiConfigurator.h>
 
 #define EEPROM_SIZE 512
 
