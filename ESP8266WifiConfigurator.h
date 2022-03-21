@@ -10,10 +10,19 @@
 #endif
 
 #include "Html.h"
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
-#include <ESP8266mDNS.h>
-#include <EEPROM.h>
+
+#if defined(ESP8266) 
+	#include <ESP8266WiFi.h>
+	#include <ESP8266WebServer.h>
+	#include <ESP8266mDNS.h>
+	#include <EEPROM.h>
+#endif
+#if defined(ESP32) 
+	#include <WiFi.h>
+	#include <WebServer.h>
+	#include <ESPmDNS.h>
+	#include <EEPROM.h>
+#endif
 
 /* a constant used to now if a configuration was previously saved or not */
 #define WIFI_CONFIGURATION_CONTROL 234.567
