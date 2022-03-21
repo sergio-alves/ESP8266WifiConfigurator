@@ -12,7 +12,13 @@
 #include "ESP8266WifiConfigurator.h"
 
 /* Initializes the server */
-ESP8266WebServer server(80);
+#if defined(ESP8266)
+	ESP8266WebServer server(80);
+#elif defined (ESP32) 
+	WebServer server(80);
+#endif
+
+	
 
 /* constructor */
 ESP8266WifiConfigurator::ESP8266WifiConfigurator(HardwareSerial * Serial, WifiConfiguration *wifiConfiguration, THandlerFunction persistConfiguration)
@@ -102,7 +108,7 @@ void ESP8266WifiConfigurator::setupWebServer() {
       server.send(200, "text/html", message);
     }
   );
-
+  
   /* the endpoint api called to set wifi configuration */
   server.on("/api/setups/wifi", HTTP_POST, [this](void) {
     
@@ -110,7 +116,7 @@ void ESP8266WifiConfigurator::setupWebServer() {
     String password = "";
   
     Serial->println("-> /api/setups/wifi");
-  
+ 
     for (uint8_t i = 0; i < server.args(); i++) {
       if (server.argName(i).equals("staSsid")) {
          strncpy(&(wifiConfiguration->sta.ssid[0]), server.arg(i).c_str(), 16);
@@ -161,5 +167,7 @@ void ESP8266WifiConfigurator::setup() {
 /* To be called the arduino loop method */
 void ESP8266WifiConfigurator::loop() {  
   server.handleClient();
+#if defined(ESP8266)
   MDNS.update();
+#endif
 }
