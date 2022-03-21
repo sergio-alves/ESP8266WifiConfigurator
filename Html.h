@@ -274,7 +274,7 @@ div #display-wifi-form-error {
 <body>
   <div id="wifi-form" class="form-style-2">
     <div class="form-style-2-heading">Wifi STA Configuration</div>
-    <form id="submit-wifi" action="/api/setups/wifi" method="post">
+    <form id="submit-wifi" action="/configuration/wifi" method="post">
       <label for="ssid"><span>SSID <span class="required">*</span></span>
         <input id="wifi-ssid" type="text" maxlength="16" class="input-field" name="ssid" value="%SSID%" /> 
       </label> 
@@ -290,7 +290,7 @@ div #display-wifi-form-error {
   </div>
   <div id="wifi-form" class="form-style-2">
     <div class="form-style-2-heading">Wifi AP Configuration</div>
-    <form id="submit-wifi" action="/api/setups/wifi" method="post">
+    <form id="submit-wifi" action="/configuration/wifi" method="post">
       <label for="ssid"><span>SSID <span class="required">*</span></span>
         <input id="wifi-ssid" type="text" maxlength="16" class="input-field" name="ssid" value="%AP_SSID%" /> 
       </label> 
